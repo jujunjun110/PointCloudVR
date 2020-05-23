@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Linq;
+
 public class ComputeBufferSetter : MonoBehaviour {
 
     public Shader PointCloudShader;
@@ -13,12 +14,14 @@ public class ComputeBufferSetter : MonoBehaviour {
     private ComputeBuffer colbuffer;
     private Material material;
     private List<(Vector3, Vector3)> pts;
-    void OnEnable() {
+    private bool bufferLoaded = false;
+
+    async void OnEnable() {
         if (PointCloudShader == null) {
             return;
         }
 
-        pts = PtsReader.Load(PtsFile);
+        pts = await PtsReader.Load(PtsFile);
         List<Vector3> positions = pts.Select(item => item.Item1).ToList();
         List<Vector3> colors = pts.Select(item => item.Item2).ToList();
 
@@ -33,6 +36,7 @@ public class ComputeBufferSetter : MonoBehaviour {
         material.SetBuffer("posBuffer", posbuffer);
         material.SetFloat("_Radius", Radius);
         material.SetFloat("_Size", Size);
+        bufferLoaded = true;
     }
 
     void OnValidate() {
@@ -48,7 +52,9 @@ public class ComputeBufferSetter : MonoBehaviour {
     }
 
     void OnRenderObject() {
-        material.SetPass(0);
-        Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
+        if (bufferLoaded) {
+            material.SetPass(0);
+            Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
+        }
     }
 }

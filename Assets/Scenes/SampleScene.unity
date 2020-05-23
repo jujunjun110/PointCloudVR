@@ -308,6 +308,21 @@ PrefabInstance:
       propertyPath: PtsFile
       value: 
       objectReference: {fileID: 4900000, guid: a9c0a4486182744488310637471f7e9c, type: 3}
+    - target: {fileID: 4578149741288598656, guid: 4605ca289c2714e46961c8150b1e10ab,
+        type: 3}
+      propertyPath: PointCloudShader
+      value: 
+      objectReference: {fileID: 4800000, guid: fa1672771d6c34bb1a3d46e21c298307, type: 3}
+    - target: {fileID: 4578149741288598656, guid: 4605ca289c2714e46961c8150b1e10ab,
+        type: 3}
+      propertyPath: Radius
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4578149741288598656, guid: 4605ca289c2714e46961c8150b1e10ab,
+        type: 3}
+      propertyPath: Size
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4578149741288598657, guid: 4605ca289c2714e46961c8150b1e10ab,
         type: 3}
       propertyPath: m_Name
