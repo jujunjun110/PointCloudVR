@@ -30,33 +30,28 @@ using System.Threading;
 /// <summary>
 /// Allows Oculus to build apps from the command line.
 /// </summary>
-partial class OculusBuildApp : EditorWindow
-{
-	static void SetPCTarget()
-	{
-		if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows)
-		{
-			EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
-		}
-		UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
-		PlayerSettings.virtualRealitySupported = true;
-		AssetDatabase.SaveAssets();
-	}
+partial class OculusBuildApp : EditorWindow {
+    static void SetPCTarget() {
+        if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows) {
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+        }
+        UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
+        PlayerSettings.virtualRealitySupported = true;
+        AssetDatabase.SaveAssets();
+    }
 
-	static void SetAndroidTarget()
-	{
-		EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
-		EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
+    static void SetAndroidTarget() {
+        EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
+        EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
 
-		if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
-		{
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
-		}
+        if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android) {
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+        }
 
-		UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
-		PlayerSettings.virtualRealitySupported = true;
-		AssetDatabase.SaveAssets();
-	}
+        UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
+        PlayerSettings.virtualRealitySupported = true;
+        AssetDatabase.SaveAssets();
+    }
 
 #if UNITY_EDITOR_WIN && UNITY_2018_3_OR_NEWER && UNITY_ANDROID
 	// Build setting constants
@@ -654,4 +649,4 @@ partial class OculusBuildApp : EditorWindow
 		UnityEngine.Debug.Log("OVRBuild: " + message);
 	}
 #endif //UNITY_EDITOR_WIN && UNITY_2018_1_OR_NEWER && UNITY_ANDROID
-		}
+}
