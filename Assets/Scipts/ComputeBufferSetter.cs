@@ -18,10 +18,14 @@ public class ComputeBufferSetter : MonoBehaviour {
 
     async void OnEnable() {
         if (PointCloudShader == null) {
+            Debug.LogError("Point Cloud Shader Not Set!");
             return;
         }
 
-        pts = await PtsReader.Load(PtsFile);
+        if (pts == null) {
+            pts = await PtsReader.Load(PtsFile);
+        }
+
         List<Vector3> positions = pts.Select(item => item.Item1).ToList();
         List<Vector3> colors = pts.Select(item => item.Item2).ToList();
 
@@ -47,6 +51,7 @@ public class ComputeBufferSetter : MonoBehaviour {
     }
 
     void OnDisable() {
+        bufferLoaded = false;
         posbuffer.Release();
         colbuffer.Release();
     }
