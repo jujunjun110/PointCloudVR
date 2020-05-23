@@ -14,7 +14,7 @@ public class ComputeBufferSetter : MonoBehaviour {
     private ComputeBuffer colbuffer;
     private Material material;
     private List<(Vector3, Vector3)> pts;
-    private bool bufferLoaded = false;
+    private bool bufferReady = false;
 
     async void OnEnable() {
         if (PointCloudShader == null) {
@@ -40,7 +40,7 @@ public class ComputeBufferSetter : MonoBehaviour {
         material.SetBuffer("posBuffer", posbuffer);
         material.SetFloat("_Radius", Radius);
         material.SetFloat("_Size", Size);
-        bufferLoaded = true;
+        bufferReady = true;
     }
 
     void OnValidate() {
@@ -51,13 +51,15 @@ public class ComputeBufferSetter : MonoBehaviour {
     }
 
     void OnDisable() {
-        bufferLoaded = false;
-        posbuffer.Release();
-        colbuffer.Release();
+        if (bufferReady) {
+            posbuffer.Release();
+            colbuffer.Release();
+        }
+        bufferReady = false;
     }
 
     void OnRenderObject() {
-        if (bufferLoaded) {
+        if (bufferReady) {
             material.SetPass(0);
             Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
         }

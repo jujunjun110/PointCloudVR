@@ -21,26 +21,25 @@
             float _Size;
             float _Radius;
 
-            v2f vert (uint id : SV_VertexID, out float4 vertex : SV_POSITION) {
+            v2f vert (uint id : SV_VertexID, out float4 vpos : SV_POSITION) {
                 v2f o;
                 float4 pos = float4(posBuffer[id], 1);
                 float dist = length(_WorldSpaceCameraPos - pos);
                 pos.y += sin(dist) * 0.2;
                 o.dist = dist;
                 o.size = _Size / dist;
-                vertex = UnityObjectToClipPos(pos);
-                o.center = ComputeScreenPos(vertex);
+                vpos = UnityObjectToClipPos(pos);
+                o.center = ComputeScreenPos(vpos);
                 o.col = fixed4(colBuffer[id] / 255, 1);
                 return o;
             }
 
             fixed4 frag (v2f i, UNITY_VPOS_TYPE vpos : VPOS) : SV_Target {
-                float4 center = i.center;
-                center.xy /= center.w;
-                center.x *= _ScreenParams.x;
-                center.y *= _ScreenParams.y;                
+                i.center.xy /= i.center.w;
+                i.center.x *= _ScreenParams.x;
+                i.center.y *= _ScreenParams.y;                
 
-                float dis = distance(vpos.xy, center.xy);
+                float dis = distance(vpos.xy, i.center.xy);
                 if (dis > _Radius / i.dist) {
                     discard;
                 }
