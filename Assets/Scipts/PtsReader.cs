@@ -9,6 +9,8 @@ public static class PtsReader {
     async public static Task<List<(Vector3, Vector3)>> Load(TextAsset ptsfile) {
         var rows = ptsfile.text.Split('\n');
 
+        // テキストファイルの読み込みとパースがボトルネックなのでいずれ最適化したい
+        // 現状はとりあえず非同期にしている
         return await Task.Run(() =>
             rows.Where(s => s != "").Select(row => parseRow(row)).ToList()
         );
@@ -19,7 +21,7 @@ public static class PtsReader {
 
         return (new Vector3(
             splitted[0],
-            splitted[2], // Z-up -> Y-up
+            splitted[2], // PTSファイルは通常Z-upなので、ここでZとYを交換しY-upに変換
             splitted[1]
         ), new Vector3(
             splitted[3],

@@ -16,6 +16,7 @@
                 float dist: TEXCOORD2;
             };
 
+            // C#から受け渡されるバッファ・パラメータの受け取り
             StructuredBuffer<float3> colBuffer;
             StructuredBuffer<float3> posBuffer;
             float _Size;
@@ -23,14 +24,23 @@
 
             v2f vert (uint id : SV_VertexID, out float4 vpos : SV_POSITION) {
                 v2f o;
+
+                // 連番で渡ってくる頂点IDを利用して、描画する頂点の座標・色を取り出し
                 float4 pos = float4(posBuffer[id], 1);
+
+                // Ptsファイルで255段階で保存されている色を0-1の階調に変換
+                o.col = fixed4(colBuffer[id] / 255, 1);
+
+                // 点群のサイズの補正のためカメラと点群の距離を計算
                 float dist = length(_WorldSpaceCameraPos - pos);
-                pos.y += sin(dist) * 0.2;
+
+                // 四角形の座標を返り値ではないoutの中に保存
+                vpos = UnityObjectToClipPos(pos);
+
+                // 四角形の中央のスクリーン座標を返り値の中に保存
+                o.center = ComputeScreenPos(vpos);
                 o.dist = dist;
                 o.size = _Size / dist;
-                vpos = UnityObjectToClipPos(pos);
-                o.center = ComputeScreenPos(vpos);
-                o.col = fixed4(colBuffer[id] / 255, 1);
                 return o;
             }
 
@@ -39,7 +49,7 @@
                 i.center.x *= _ScreenParams.x;
                 i.center.y *= _ScreenParams.y;                
 
-                float dis = distance(vpos.xy, i.center.xy);
+                float dis =length(vpos.xy - i.center.xy);
                 if (dis > _Radius / i.dist) {
                     discard;
                 }

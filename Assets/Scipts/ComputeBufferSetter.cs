@@ -29,17 +29,21 @@ public class ComputeBufferSetter : MonoBehaviour {
         List<Vector3> positions = pts.Select(item => item.Item1).ToList();
         List<Vector3> colors = pts.Select(item => item.Item2).ToList();
 
+        // バッファ領域を確保・セット
+        // 確保する領域サイズは、データ数 × データ一つあたりのサイズ
         int size = Marshal.SizeOf(new Vector3());
         posbuffer = new ComputeBuffer(positions.Count, size);
         colbuffer = new ComputeBuffer(colors.Count, size);
         posbuffer.SetData(positions);
         colbuffer.SetData(colors);
 
+        // マテリアルを作成しバッファとパラメータをセット
         material = new Material(PointCloudShader);
         material.SetBuffer("colBuffer", colbuffer);
         material.SetBuffer("posBuffer", posbuffer);
         material.SetFloat("_Radius", PointRadius);
         material.SetFloat("_Size", PointSize);
+
         bufferReady = true;
     }
 
@@ -60,6 +64,7 @@ public class ComputeBufferSetter : MonoBehaviour {
 
     void OnRenderObject() {
         if (bufferReady) {
+            // レンダリングのたびに頂点の個数分シェーダーを実行
             material.SetPass(0);
             Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
         }
