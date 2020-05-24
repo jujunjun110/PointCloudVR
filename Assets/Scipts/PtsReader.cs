@@ -14,15 +14,16 @@ public static class PtsReader {
     }
 
     private static (Vector3, Vector3) parseRow(string row) {
-        var splitted = row.Split(' ');
+        var splitted = row.Split(' ').Select(float.Parse).ToList();
+
         return (new Vector3(
-            float.Parse(splitted[0]),
-            float.Parse(splitted[2]), // Z-up -> Y-up
-            float.Parse(splitted[1])
+            splitted[0],
+            splitted[2], // Z-up -> Y-up
+            splitted[1]
         ), new Vector3(
-            float.Parse(splitted[3]),
-            float.Parse(splitted[4]),
-            float.Parse(splitted[5])
+            splitted[3],
+            splitted[4],
+            splitted[5]
         ));
     }
 }
