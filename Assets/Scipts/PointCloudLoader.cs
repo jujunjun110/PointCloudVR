@@ -55,7 +55,7 @@ public class PointCloudLoader : MonoBehaviour {
             Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
         }
     }
-    void OnValidate() {
+    public void OnValidate() {
         if (material != null) {
             material.SetFloat("_Radius", PointRadius);
             material.SetFloat("_Size", PointSize);
