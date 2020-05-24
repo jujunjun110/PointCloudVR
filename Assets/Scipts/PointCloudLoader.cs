@@ -47,6 +47,10 @@ public class PointCloudLoader : MonoBehaviour {
         bufferReady = true;
     }
 
+    public bool IsReady() {
+        return this.bufferReady;
+    }
+
     void OnRenderObject() {
         if (bufferReady) {
             // レンダリングのたびに頂点の個数分シェーダーを実行
