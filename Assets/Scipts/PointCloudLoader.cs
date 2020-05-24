@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Linq;
 
-public class ComputeBufferSetter : MonoBehaviour {
+public class PointCloudLoader : MonoBehaviour {
 
     public Shader PointCloudShader;
     public TextAsset PtsFile;
