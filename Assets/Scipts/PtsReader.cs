@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +10,7 @@ public static class PtsReader {
         // テキストファイルの読み込みとパースがボトルネックなのでいずれ最適化したい
         // 現状はとりあえず非同期読み込みにしてメインスレッドがブロックされることを回避
         return await Task.Run(() =>
-            rows.Where(s => s != "").Select(row => parseRow(row)).ToList()
+            rows.Where(s => s != "").Select(parseRow).ToList()
         );
     }
 

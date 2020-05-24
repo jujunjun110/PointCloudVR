@@ -19,7 +19,7 @@
                 fixed4 col: COLOR;
                 float4 center: ANY0; // 描画する四角形の中心の座標
                 float dist: ANY1; // 描画する頂点とカメラの間の距離
-                float size: PSIZE; // MeshTopology.Points の際の頂点の描画サイズを表すセマンティクス
+                float size: PSIZE; // MeshTopology.Points の際の頂点の描画サイズを表す定義済セマンティクス
             };
 
             v2f vert (uint id : SV_VertexID) {
