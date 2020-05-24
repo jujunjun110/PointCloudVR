@@ -35,7 +35,9 @@
                 // 点群のサイズの補正のためカメラと点群の距離を計算
                 float dist = length(_WorldSpaceCameraPos - pos);
 
-                o.pos = UnityObjectToClipPos(pos) + float4(0, 1, 0, 0) * sin(dist) * 0.3;
+                pos.y += sin(length(pos.xz - _WorldSpaceCameraPos.xz)) * 0.5;
+
+                o.pos = UnityObjectToClipPos(pos);
 
                 // 四角形の中央のスクリーン座標も渡すようにする
                 // 自分でプロジェクション座標変換する必要がある
