@@ -1,7 +1,6 @@
-﻿Shader "Unlit/PointCloud" {
+﻿Shader "Custom/PointCloud" {
     SubShader {
         Tags { "RenderType"="Opaque" }
-        LOD 100
 
         Pass {
             CGPROGRAM
@@ -18,8 +17,8 @@
             struct v2f {
                 float4 pos: POSITION;
                 fixed4 col: COLOR;
-                float4 center: TEXCOORD;
-                float dist: TEXCOORD1; // 描画する頂点とカメラの間の距離
+                float4 center: ANY0; // 描画する四角形の中心の座標
+                float dist: ANY1; // 描画する頂点とカメラの間の距離
                 float size: PSIZE; // MeshTopology.Points の際の頂点の描画サイズを表すセマンティクス
             };
 
@@ -29,7 +28,8 @@
                 // 連番で渡ってくる頂点IDを利用して、描画する頂点の座標を取り出し
                 float4 pos = float4(posBuffer[id], 1);
 
-                // 色の取り出し: Ptsファイルで255段階で保存されている色ので0-1の階調に変換
+                // 同様に色の取り出し
+                // Ptsファイルで255段階で保存されている色ので0-1の階調に変換
                 o.col = fixed4(colBuffer[id] / 255, 1);
 
                 // 点群のサイズの補正のためカメラと点群の距離を計算
@@ -38,7 +38,7 @@
                 o.pos = UnityObjectToClipPos(pos);
 
                 // 四角形の中央のスクリーン座標も渡すようにする
-                // TEXCOORDとして渡すため、自分でプロジェクション座標変換する必要がある
+                // 自分でプロジェクション座標変換する必要がある
                 float4 center = ComputeScreenPos(o.pos);
                 center.xy /= center.w;
                 center.x *= _ScreenParams.x;
@@ -52,8 +52,8 @@
 
             fixed4 frag (v2f i) : SV_Target {
                 // i.pos はPOSITIONセマンティックスを使っているため、
-                // ラスタライズされるごとに異なるスクリーン座標が渡されてくる。
-                // i.centerはTEXCOORDセマンティックスを使っているため、
+                // 自動的にラスタライズされ、ピクセルごとに異なるスクリーン座標が渡されてくる。
+                // i.centerはANYセマンティックス（何を入れてもいい）を使い、自前で座標変換しているため、
                 // 同じ四角形の中では必ず同じ座標（四角形の中心）が渡されてくる。
 
                 // 円を描画するため、描画するピクセルのスクリーン座標と、
