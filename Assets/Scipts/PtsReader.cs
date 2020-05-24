@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 public static class PtsReader {
     async public static Task<List<(Vector3, Vector3)>> Load(TextAsset ptsfile) {
         var rows = ptsfile.text.Split('\n');
+
         return await Task.Run(() =>
             rows.Where(s => s != "").Select(row => parseRow(row)).ToList()
         );

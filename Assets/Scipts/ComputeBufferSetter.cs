@@ -7,8 +7,8 @@ public class ComputeBufferSetter : MonoBehaviour {
 
     public Shader PointCloudShader;
     public TextAsset PtsFile;
-    [Range(0, 500)] public float Radius = 50;
-    [Range(0, 500)] public float Size = 100;
+    [Range(0, 500)] public float PointRadius = 50;
+    [Range(0, 500)] public float PointSize = 100;
 
     private ComputeBuffer posbuffer;
     private ComputeBuffer colbuffer;
@@ -38,15 +38,15 @@ public class ComputeBufferSetter : MonoBehaviour {
         material = new Material(PointCloudShader);
         material.SetBuffer("colBuffer", colbuffer);
         material.SetBuffer("posBuffer", posbuffer);
-        material.SetFloat("_Radius", Radius);
-        material.SetFloat("_Size", Size);
+        material.SetFloat("_Radius", PointRadius);
+        material.SetFloat("_Size", PointSize);
         bufferReady = true;
     }
 
     void OnValidate() {
         if (material != null) {
-            material.SetFloat("_Radius", Radius);
-            material.SetFloat("_Size", Size);
+            material.SetFloat("_Radius", PointRadius);
+            material.SetFloat("_Size", PointSize);
         }
     }
 
