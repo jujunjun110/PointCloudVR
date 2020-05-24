@@ -47,6 +47,14 @@ public class ComputeBufferSetter : MonoBehaviour {
         bufferReady = true;
     }
 
+    void OnRenderObject() {
+        if (bufferReady) {
+            // レンダリングのたびに頂点の個数分シェーダーを実行
+            // MeshTopology.Pointsを指定することで、面ではなく頂点が描画される            
+            material.SetPass(0);
+            Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
+        }
+    }
     void OnValidate() {
         if (material != null) {
             material.SetFloat("_Radius", PointRadius);
@@ -60,13 +68,5 @@ public class ComputeBufferSetter : MonoBehaviour {
             colbuffer.Release();
         }
         bufferReady = false;
-    }
-
-    void OnRenderObject() {
-        if (bufferReady) {
-            // レンダリングのたびに頂点の個数分シェーダーを実行
-            material.SetPass(0);
-            Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
-        }
     }
 }
