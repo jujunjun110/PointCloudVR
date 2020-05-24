@@ -1,3 +1,5 @@
+#pragma warning disable 0618
+
 /************************************************************************************
 
 Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
