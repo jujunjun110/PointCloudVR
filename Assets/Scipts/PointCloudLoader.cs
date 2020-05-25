@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 using System.Linq;
 
 public class PointCloudLoader : MonoBehaviour {
-    public Shader PointCloudShader;
-    public TextAsset PtsFile;
+    [SerializeField] Shader PointCloudShader;
+    [SerializeField] TextAsset PtsFile;
     [Range(0, 500)] public float PointRadius = 50;
     [Range(0, 500)] public float PointSize = 100;
 
