@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 public static class PtsReader {
     async public static Task<List<(Vector3, Vector3)>> Load(TextAsset ptsfile) {
-        var rows = ptsfile.text.Split('\n');
+        var content = ptsfile.text;
 
         // テキストファイルの読み込みとパースがボトルネックなのでいずれ最適化したい
         // 現状はとりあえず非同期読み込みにしてメインスレッドがブロックされることを回避
         return await Task.Run(() =>
-            rows.Where(s => s != "").Select(parseRow).ToList()
+            content.Split('\n').Where(s => s != "").Select(parseRow).ToList()
         );
     }
 
