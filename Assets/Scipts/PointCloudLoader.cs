@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Linq;
 
 public class PointCloudLoader : MonoBehaviour {
-
     public Shader PointCloudShader;
     public TextAsset PtsFile;
     [Range(0, 500)] public float PointRadius = 50;
