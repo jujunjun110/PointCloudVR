@@ -35,7 +35,7 @@
                 // 点群のサイズの補正のためカメラと点群の距離を計算
                 float dist = length(_WorldSpaceCameraPos - pos);
 
-                pos.y += sin(length(pos.xz - _WorldSpaceCameraPos.xz)) * 0.5;
+                // pos.y += sin(length(pos.xz - _WorldSpaceCameraPos.xz)) * 0.5;
 
                 o.pos = UnityObjectToClipPos(pos);
 
