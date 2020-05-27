@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PointCloudShader: {fileID: 4800000, guid: fa1672771d6c34bb1a3d46e21c298307, type: 3}
-  PtsFile: {fileID: 4900000, guid: a064dc58a152f453ba65add41e571a38, type: 3}
+  PtsFile: {fileID: 4900000, guid: 5adbdc66924b24b9fa9bc5d854e58332, type: 3}
   PointRadius: 90
   PointSize: 500
 --- !u!1001 &1910078260
