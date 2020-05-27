@@ -61,7 +61,7 @@ public class ControllerManager : MonoBehaviour {
     }
 
     private void UpdateCanvas() {
-        loader.OnValidate();
+        loader.ReflectParams();
         canvas.SetActive(true);
         mainText.text = $"Point Size: {loader.PointRadius}\n(Press B to close)";
     }
