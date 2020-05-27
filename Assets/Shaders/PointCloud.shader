@@ -13,6 +13,7 @@
             StructuredBuffer<float3> posBuffer;
             float _Size;
             float _Radius;
+            float3 _WorldPos;
 
             struct v2f {
                 float4 pos: POSITION;
@@ -26,7 +27,7 @@
                 v2f o;
 
                 // 連番で渡ってくる頂点IDを利用して、描画する頂点の座標を取り出し
-                float4 pos = float4(posBuffer[id], 1);
+                float4 pos = float4(posBuffer[id] + _WorldPos, 1);
 
                 // 同様に色の取り出し
                 // Ptsファイルで255段階で保存されている色ので0-1の階調に変換

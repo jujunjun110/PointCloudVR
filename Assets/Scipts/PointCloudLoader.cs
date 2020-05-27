@@ -40,10 +40,27 @@ public class PointCloudLoader : MonoBehaviour {
         material = new Material(PointCloudShader);
         material.SetBuffer("colBuffer", colbuffer);
         material.SetBuffer("posBuffer", posbuffer);
-        material.SetFloat("_Radius", PointRadius);
-        material.SetFloat("_Size", PointSize);
+        ReflectParams();
 
         bufferReady = true;
+    }
+
+    void Update() {
+        if (transform.hasChanged) {
+            ReflectParams();
+        }
+    }
+
+    void OnValidate() {
+        ReflectParams();
+    }
+
+    public void ReflectParams() {
+        if (material != null) {
+            material.SetFloat("_Radius", PointRadius);
+            material.SetFloat("_Size", PointSize);
+            material.SetVector("_WorldPos", this.transform.position);
+        }
     }
 
     public bool IsReady() {
@@ -56,12 +73,6 @@ public class PointCloudLoader : MonoBehaviour {
             // MeshTopology.Pointsを指定することで、面ではなく頂点が描画される            
             material.SetPass(0);
             Graphics.DrawProceduralNow(MeshTopology.Points, pts.Count);
-        }
-    }
-    public void OnValidate() {
-        if (material != null) {
-            material.SetFloat("_Radius", PointRadius);
-            material.SetFloat("_Size", PointSize);
         }
     }
 
