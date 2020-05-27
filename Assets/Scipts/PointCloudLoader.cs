@@ -42,6 +42,7 @@ public class PointCloudLoader : MonoBehaviour {
         material.SetBuffer("posBuffer", posbuffer);
         material.SetFloat("_Radius", PointRadius);
         material.SetFloat("_Size", PointSize);
+        material.SetVector("_WorldPos", this.transform.position);
 
         bufferReady = true;
     }
